@@ -40,12 +40,7 @@ function pixelPerfect(props, el=document.documentElement) {
     let ratio = window.devicePixelRatio;
 
     props.forEach((val,prop)=>{
-      val = parseInt(val);
-      let actual = val*ratio;
-      let drift = actual - Math.round(actual);
-      let adjust = 1-drift/actual;
-      let final = val*adjust;
-      el.style.setProperty(prop, final + 'px'); 
+      el.style.setProperty(prop, Math.round(parseInt(val)*ratio)/ratio + 'px'); 
     })
 
     mql = window.matchMedia('not screen and (resolution: '+ratio+'dppx)');
@@ -55,7 +50,7 @@ function pixelPerfect(props, el=document.documentElement) {
   return {
     stop: ()=>{
       mql.removeEventListener('change', matchMedia, {once:true});
-    }
+    },
     restore: function () {
       this.stop;
       props.forEach((val,prop)=>{
