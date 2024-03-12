@@ -28,6 +28,7 @@ match.recalc();
 function pixelPerfect(props, el=document.documentElement) {
 
   if (typeof props === 'string') props = [props];
+  if (typeof el === 'string') el = document.querySelector(el);
 
   props = new Map(props.map((p)=>[p,getComputedStyle(el).getPropertyValue(p)]));
 
