@@ -19,7 +19,7 @@ Usage
   match.restore();   // reset property to original value
 
   // Use a specific element instead of :root
-  pixelPerfect('--height', '#target');                // by selector
+  pixelPerfect('--height', '#target'); // by selector
   pixelPerfect('--height', document.querySelector('#target')); // by element
 */
 
