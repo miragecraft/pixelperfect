@@ -2,8 +2,12 @@
     http://www.miragecraft.com
     Licensed under MIT Open Source
 
-Ensures pixel-perfect rendering of elements by adjusting CSS variable values
-so the rendered size rounds to a whole integer based on devicePixelRatio.
+Preserve pixel alignment when zooming/resizing the webpage.
+
+How
+===
+
+Monitor devicePixelRatio changes, adjusting CSS variable values so the rendered size rounds to the nearest integer.
 
 Usage
 =====
