@@ -23,29 +23,38 @@ Usage
   match.restore();   // reset property to original value
 
   // Use a specific element instead of :root
-  pixelPerfect('--height', '#target'); // by selector
-  pixelPerfect('--height', document.querySelector('#target')); // by element
+  pixelPerfect('--height', {target: '#target'}); // by selector
+  pixelPerfect('--height', {target: document.querySelector('#target')}); // by element
 */
 
-function pixelPerfect(props, el = document.documentElement, options = {}) {
+function pixelPerfect(props, options = {}) {
   if (typeof props === 'string') props = [props];
-  if (typeof el === 'string') el = document.querySelector(el);
 
-  if (!el) {
+  // Default options
+  let {
+    target = document.documentElement,
+    autoStart = true,
+  } = options;
+
+  if (typeof target === 'string') {
+    target = document.querySelector(target);
+  }
+
+  if (!target) {
     throw new Error('pixelPerfect: Invalid target element.');
   }
 
   let mediaQuery = null;
 
   const reset = () => {
-    props.forEach(prop => el.style.removeProperty(prop));
+    props.forEach(prop => target.style.removeProperty(prop));
   };
 
   const update = () => {
     reset();
 
     const ratio = window.devicePixelRatio;
-    const computed = getComputedStyle(el);
+    const computed = getComputedStyle(target);
 
     props.forEach(prop => {
       const raw = computed.getPropertyValue(prop);
@@ -56,7 +65,7 @@ function pixelPerfect(props, el = document.documentElement, options = {}) {
       }
  
       const adjusted = Math.round(val * ratio) / ratio;
-      el.style.setProperty(prop, `${adjusted}px`);
+      target.style.setProperty(prop, `${adjusted}px`);
     });
   };
 
@@ -84,10 +93,7 @@ function pixelPerfect(props, el = document.documentElement, options = {}) {
     attach();
   };
 
-  // Auto-start unless disabled
-  if (options.autoStart !== false) {
-    start();
-  }
+  if (autoStart) start();
 
   return {
     start,
