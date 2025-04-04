@@ -20,7 +20,7 @@ match.update();    // force recalculation
 match.restore();   // reset property to original value
 
 // Use a specific element instead of :root
-pixelPerfect('--height', '#target'); // by selector
-pixelPerfect('--height', document.querySelector('#target')); // by element
+pixelPerfect('--height', {target: '#target'}); // by selector
+pixelPerfect('--height', {target: document.querySelector('#target')}); // by element
 ```
 [More information](https://miragecraft.com/projects/pixelperfect)
